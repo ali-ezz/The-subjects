@@ -1,4 +1,3 @@
-let activeFilters = [];
 const box1Filters = {
     'Filter 1': 'مواد عامه',
     'Filter 2': 'علوم البيانات',
@@ -186,23 +185,37 @@ const contentItems = {
     { src: 'images/Innovation & Entrepreneurship.jpeg', label: 'Innovation & Entrepreneurship', customContent: '<h3>the course data</h3><br><h4>the code:GEN 316&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Credit hours:3</h4><br><h4>Hours of lecture:2&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Hours of exercise/lab:0/0</h4><br><h3>Course description</h3><br><h4>This course explores the principles of innovation and entrepreneurship, including idea generation, business planning, and startup management. Students will learn to identify opportunities, develop innovative solutions, and create viable business models, with a focus on practical skills for launching and growing new ventures</h4><br><h3>Pre-request Courses</h3><br><h3>no pre-request courses is required</h3>'},
     { src: 'images/Problem Solving & Decision-Making Skills.jpeg', label: 'Problem Solving & Decision-Making Skills', customContent: '<h3>the course data</h3><br><h4>the code:GEN 317&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Credit hours:3</h4><br><h4>Hours of lecture:2&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Hours of exercise/lab:0/0</h4><br><h3>Course description</h3><br><h4>This course focuses on enhancing problem-solving and decision-making abilities. Students will learn techniques for analyzing complex issues, evaluating options, and making informed decisions. Emphasis is placed on practical approaches, critical thinking, and applying structured methods to solve problems effectively in various scenarios</h4><br><h3>Pre-request Courses</h3><br><h3>no pre-request courses is required</h3>'}
 ]}
+let activeFilters = [];
+let activeCircleFilters = []; // Array to track active circle filters
 
-document.addEventListener('DOMContentLoaded', () => {
-    const initialBox1Filter = activeFilters.find(filter => Object.keys(box1Filters).includes(filter));
-    if (initialBox1Filter) {
-        updateBox2(initialBox1Filter);
-    } else {
-        updateBox2(); // No Box 1 filter is selected
+// ... existing JavaScript code ...
+
+// Function to open modal
+function openModal(imageSrc, label, customContent) {
+    const modal = document.getElementById('imageModal');
+    const modalImage = document.getElementById('modalImage');
+    const modalCustomContent = document.getElementById('modalCustomContent');
+
+    modalImage.src = imageSrc;
+    modalImage.alt = label; // Add alt attribute for accessibility
+    modalCustomContent.innerHTML = `<p style="margin: 10px; font-size: 18px;">${label}</p><div>${customContent}</div>`;
+    modal.style.display = 'flex';
+}
+
+// Close modal when clicking outside of the modal content
+document.getElementById('imageModal').addEventListener('click', (event) => {
+    if (event.target === event.currentTarget) {
+        closeModal();
     }
-    updateSelectedFilterBox(); // Update the selected filters area
-    updateContentArea(); // Update content area based on filters
 });
 
-document.getElementById('search-bar').addEventListener('input', (event) => {
-    const searchTerm = event.target.value.toLowerCase();
-    updateContentArea(searchTerm);
-});
+function closeModal() {
+    const modal = document.getElementById('imageModal');
+    modal.style.display = 'none';
+}
 
+// ... rest of your JavaScript code ...
+// Function to handle selecting filters
 function selectFilter(filterName) {
     if (Object.keys(box1Filters).includes(filterName)) {
         // Handle Box 1 Filters
@@ -227,31 +240,37 @@ function selectFilter(filterName) {
     updateContentArea();
 }
 
+// Function to handle selecting circle color filters
+function selectCircleFilter(color) {
+    if (!activeCircleFilters.includes(color)) {
+        activeCircleFilters.push(color);
+    } else {
+        activeCircleFilters = activeCircleFilters.filter(c => c !== color);
+    }
+    updateSelectedFilterBox();
+    updateContentArea();
+}
+
+// Function to remove filters
 function removeFilter(filterName) {
-    // Remove Box 1 filter and related Box 2 filters
     if (Object.keys(box1Filters).includes(filterName)) {
         activeFilters = activeFilters.filter(filter => !box2Filters[filterName]?.includes(filter));
     }
-    // Remove the selected filter
     activeFilters = activeFilters.filter(filter => filter !== filterName);
     updateSelectedFilterBox();
     updateContentArea();
-    updateBox2(); // Ensure Box 2 filters are updated
+    updateBox2();
 }
 
+// Function to update content area based on filters
 function updateContentArea(searchTerm = '') {
     const contentArea = document.getElementById('content-area');
-    // Fade out existing images
-    const existingImages = contentArea.querySelectorAll('.image-container');
-    existingImages.forEach(imgContainer => {
-        imgContainer.classList.add('fade-out');
-        imgContainer.addEventListener('animationend', () => {
-            imgContainer.remove();
-        });
-    });
+    // Clear existing content
+    contentArea.innerHTML = '';
 
     const box1Filter = activeFilters.find(filter => Object.keys(box1Filters).includes(filter));
     const box2FiltersActive = activeFilters.filter(filter => !Object.keys(box1Filters).includes(filter));
+
     let imagesToDisplay = [];
 
     if (box2FiltersActive.length > 0) {
@@ -259,15 +278,7 @@ function updateContentArea(searchTerm = '') {
         box2FiltersActive.forEach(filter => {
             const images = contentItems[filter] || [];
             images.forEach(item => {
-                if (typeof item === 'object') {
-                    imagesToDisplay.push(item);
-                } else {
-                    imagesToDisplay.push({
-                        src: item,
-                        label: 'Label',
-                        customContent: 'Custom content for Label'
-                    });
-                }
+                imagesToDisplay.push(item);
             });
         });
     } else if (box1Filter) {
@@ -276,15 +287,7 @@ function updateContentArea(searchTerm = '') {
         box2FilterNames.forEach(filter => {
             const images = contentItems[filter] || [];
             images.forEach(item => {
-                if (typeof item === 'object') {
-                    imagesToDisplay.push(item);
-                } else {
-                    imagesToDisplay.push({
-                        src: item,
-                        label: 'Label',
-                        customContent: 'Custom content for Label'
-                    });
-                }
+                imagesToDisplay.push(item);
             });
         });
     } else {
@@ -292,17 +295,14 @@ function updateContentArea(searchTerm = '') {
         Object.keys(contentItems).forEach(category => {
             const images = contentItems[category];
             images.forEach(item => {
-                if (typeof item === 'object') {
-                    imagesToDisplay.push(item);
-                } else {
-                    imagesToDisplay.push({
-                        src: item,
-                        label: 'Label',
-                        customContent: 'Custom content for Label'
-                    });
-                }
+                imagesToDisplay.push(item);
             });
         });
+    }
+
+    // Filter based on active circle filters
+    if (activeCircleFilters.length > 0) {
+        imagesToDisplay = imagesToDisplay.filter(item => activeCircleFilters.includes(item.color));
     }
 
     // Filter and sort images based on the search term
@@ -330,48 +330,47 @@ function updateContentArea(searchTerm = '') {
         const imgElement = document.createElement('img');
         imgElement.src = item.src;
         imgElement.classList.add('content-image');
-        imgElement.style.width = '150px'; // Smaller image size
 
         // Add label
         const label = document.createElement('div');
         label.classList.add('image-label');
         label.textContent = item.label;
 
-        // Add heart button
-        const heartButton = document.createElement('button');
-        heartButton.classList.add('heart-button');
-        heartButton.innerHTML = '❤️';
-        heartButton.onclick = (event) => {
-            event.stopPropagation(); // Prevent triggering the modal
-            heartButton.classList.toggle('liked');
-        };
+        // Add circle indicator
+        const circleIndicator = document.createElement('div');
+        circleIndicator.classList.add('circle-indicator', item.color);
 
-        // Add plus button to open modal
+        // Add plus button
         const plusButton = document.createElement('button');
         plusButton.classList.add('plus-button');
         plusButton.innerHTML = '+';
         plusButton.onclick = (event) => {
-            event.stopPropagation(); // Prevent triggering other events
+            event.stopPropagation();
             openModal(item.src, item.label, item.customContent);
         };
 
+        // Add click event to open modal when clicking on the image container
+        imgContainer.onclick = () => openModal(item.src, item.label, item.customContent);
+
         imgContainer.appendChild(imgElement);
         imgContainer.appendChild(label);
-        imgContainer.appendChild(heartButton);
+        imgContainer.appendChild(circleIndicator);
         imgContainer.appendChild(plusButton);
+
         contentArea.appendChild(imgContainer);
     });
 }
 
+// Function to open modal
 function openModal(imageSrc, label, customContent) {
     const modal = document.getElementById('imageModal');
     const modalImage = document.getElementById('modalImage');
     const modalCustomContent = document.getElementById('modalCustomContent');
 
     modalImage.src = imageSrc;
-    modalImage.style.display = 'block'; // Show the image
-    modalCustomContent.innerHTML = `<p style="margin: 10px;font-size: 18px;">${label}</p><div>${customContent}</div>`; // Display custom content
-    modal.style.display = 'flex'; // Show the modal
+    modalImage.style.display = 'block';
+    modalCustomContent.innerHTML = `<p style="margin: 10px; font-size: 18px;">${label}</p><div>${customContent}</div>`;
+    modal.style.display = 'flex';
 }
 
 // Close modal when clicking outside of the modal content
@@ -383,16 +382,18 @@ document.getElementById('imageModal').addEventListener('click', (event) => {
 
 function closeModal() {
     const modal = document.getElementById('imageModal');
-    modal.style.display = 'none'; // Hide the modal
+    modal.style.display = 'none';
 }
 
+// Function to update selected filters display
 function updateSelectedFilterBox() {
     const selectedFilterBox = document.getElementById('selected-filter-content');
     selectedFilterBox.innerHTML = '';
 
-    if (activeFilters.length === 0) {
-        selectedFilterBox.innerHTML = '<p style="font-size: 20px;padding: 5px;border-radius: 20px;border: 1px solid #000000;""> ليس هناك اي مرشح مضاف</p>'; // No filters added message
+    if (activeFilters.length === 0 && activeCircleFilters.length === 0) {
+        selectedFilterBox.innerHTML = '<p style="font-size: 20px; padding: 5px; border-radius: 20px; border: 1px solid #000;">ليس هناك أي مرشح مضاف</p>';
     } else {
+        // Display active filters
         activeFilters.forEach(filterName => {
             const filterText = box1Filters[filterName] || filterName;
             const filterItem = document.createElement('div');
@@ -404,45 +405,69 @@ function updateSelectedFilterBox() {
             selectedFilterBox.appendChild(filterItem);
         });
 
-        // Add Clear All Button
+        // Display active circle filters
+        activeCircleFilters.forEach(color => {
+            const filterItem = document.createElement('div');
+            filterItem.classList.add('selected-filter-item');
+
+            // Create circle icon
+            const circleIcon = document.createElement('div');
+            circleIcon.classList.add('circle-icon', color);
+            circleIcon.style.marginRight = '5px';
+            filterItem.appendChild(circleIcon);
+
+            const filterText = document.createElement('span');
+            const colorLabels = {
+                'green': 'يدرس',
+                'yellow': 'قادم',
+                'red': 'ملغى'
+            };
+            filterText.textContent = colorLabels[color];
+            filterItem.appendChild(filterText);
+
+            // Add remove button
+            const removeButton = document.createElement('button');
+            removeButton.classList.add('filter-clear-button');
+            removeButton.textContent = 'X';
+            removeButton.onclick = () => {
+                selectCircleFilter(color);
+            };
+            filterItem.appendChild(removeButton);
+
+            selectedFilterBox.appendChild(filterItem);
+        });
+
+        // Add Clear All button
         const clearAllButton = document.createElement('button');
-        clearAllButton.textContent = 'Clear All';
+        clearAllButton.textContent = 'مسح الكل';
         clearAllButton.classList.add('clear-all-button');
         clearAllButton.onclick = clearAllFilters;
         selectedFilterBox.appendChild(clearAllButton);
     }
 }
 
+// Function to clear all filters
 function clearAllFilters() {
     activeFilters = [];
-    saveFiltersToLocalStorage();
+    activeCircleFilters = [];
     updateSelectedFilterBox();
     updateContentArea();
-    updateBox2(); // Call updateBox2 without arguments to show message
+    updateBox2();
 }
 
-function loadFiltersFromLocalStorage() {
-    const savedFilters = localStorage.getItem('activeFilters');
-    if (savedFilters) {
-        activeFilters = JSON.parse(savedFilters);
-    }
-}
-
-function saveFiltersToLocalStorage() {
-    localStorage.setItem('activeFilters', JSON.stringify(activeFilters));
-}
-
+// Function to check if a Box 1 filter is active
 function isBox1FilterActive() {
     return activeFilters.some(filter => Object.keys(box1Filters).includes(filter));
 }
 
+// Function to update Box 2 filters
 function updateBox2() {
     const filterArea2 = document.querySelector('.filter-area-2');
     filterArea2.innerHTML = '';
 
     if (!isBox1FilterActive()) {
         // Display message when no Box 1 filter is selected
-        filterArea2.innerHTML = '<p style="font-size: 20px;padding: 5px;border-radius: 20px;border: 1px solid #000000;">اختر من الاقسام من الاعلى</p>';
+        filterArea2.innerHTML = '<p style="font-size: 16px; padding: 5px; border-radius: 20px; border: 1px solid #000;">اختر من الأقسام من الأعلى</p>';
     } else {
         // Find the active Box 1 filter
         const activeBox1Filter = activeFilters.find(filter => Object.keys(box1Filters).includes(filter));
@@ -452,21 +477,29 @@ function updateBox2() {
                 const button = document.createElement('button');
                 button.classList.add('filter-button');
                 button.textContent = buttonName;
+                button.style.width = '100%';
                 button.onclick = () => selectFilter(buttonName);
+
+                // Check if this filter is active
+                if (activeFilters.includes(buttonName)) {
+                    button.style.backgroundColor = '#1e7e34'; // Active state color
+                }
+
                 filterArea2.appendChild(button);
             });
         }
     }
 }
 
-function deleteImage(imageSrc) {
-    // Find the image container with the specified image source
-    const imgContainers = document.querySelectorAll('.image-container');
-    imgContainers.forEach(container => {
-        const imgElement = container.querySelector('img');
-        if (imgElement && imgElement.src === imageSrc) {
-            container.remove(); // Remove the image container
-        }
-    });
-    closeModal(); // Close the modal
-}
+// Initialize the content and filters on page load
+document.addEventListener('DOMContentLoaded', () => {
+    updateBox2();
+    updateSelectedFilterBox();
+    updateContentArea();
+});
+
+// Event listener for search bar input
+document.getElementById('search-bar').addEventListener('input', (event) => {
+    const searchTerm = event.target.value.toLowerCase();
+    updateContentArea(searchTerm);
+});

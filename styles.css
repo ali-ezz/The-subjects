@@ -6,25 +6,23 @@
 }
 
 body {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    background-color: #f0f0f0;
     font-family: Arial, sans-serif;
+    background-color: #f0f0f0;
+    overflow: hidden; /* Prevent body scroll */
 }
 
-.container {
-    display: flex;
-    width: 1100px;
-    height: 550px;
-    margin-top: 20px; /* Space below Box 1 */
+/* Header */
+h1 {
+    text-align: center;
+    margin: 20px;
 }
+
 /* Search Bar Styles */
 .search-container {
     width: 100%;
     display: flex;
     justify-content: center;
-    margin-top: 20px; /* Margin at the top */
+    margin-top: 10px;
 }
 
 .search-bar {
@@ -34,96 +32,103 @@ body {
     border: 1px solid #ccc;
     border-radius: 20px;
     font-size: 16px;
-    text-align: right; /* Align text to the right */
+    text-align: right;
 }
 
 /* Box 1: Filter Area 1 Styles */
 .box-1-container {
-    width: 50%;
+    width: 100%;
     display: flex;
     justify-content: center;
-    margin-top: 20px; /* Margin below the search bar */
+    margin-top: 10px;
 }
 
 .filter-area-1 {
-    width: 90%; /* Smaller width for Box 1 */
     display: flex;
-    flex-direction: row; /* Horizontal layout for buttons */
-    gap: 10px; /* Space between buttons */
+    flex-direction: row;
+    gap: 10px;
     padding: 10px;
-    border: 1px solid transparent;
-    background-color: transparent;
-    border-radius: 15px;
-    justify-content: center; /* Center buttons horizontally */
+    justify-content: center;
+    flex-wrap: wrap;
+    width: 90%;
 }
 
-.filter-area-1 .filter-button {
-    flex: 1; /* Equal width buttons */
+.filter-button {
+    padding: 12px;
+    border: 1px solid #ccc;
+    color: white;
+    font-size: 16px;
+    border-radius: 50px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
     background-color: #007bff;
-    margin: 0; /* Remove any default margins */
-    width: 100%; /* Ensure buttons take full width of their container */
 }
 
-.filter-area-1 .filter-button:hover {
+.filter-button:hover {
     background-color: #0056b3;
 }
 
 /* Main Content and Right Side Styles */
-
-.image-container {
-    display: inline-block;
-    margin: 10px;
+.container {
+    display: flex;
+    width: 90%; /* Added space from screen edges */
+    margin: 20px auto; /* Center container */
+    height: calc(100vh - 250px); /* Adjust height as needed */
 }
 
-.image-container img {
-    cursor: pointer;
-    width: 150px;  /* Fixed width */
-    height: 150px; /* Fixed height */
-}
-
-.image-label {
-    text-align: center;
-    margin-top: 10px; /* Add margin between image and label */
-}
 .content-container {
-    width: 75%;
-    height: 90%; /* Use full height of the container */
+    flex: 1;
     background-color: #e2e2e2;
     border-radius: 20px;
-    display: flex;
-    flex-direction: column;
+    overflow-y: auto;
+    padding: 20px;
     margin-right: 20px;
-    overflow-y: auto; /* Enable vertical scrolling */
-    padding: 20px; /* Add padding to content area */
-}
-/* Image Container Styles */
-.content-area {
-    display: flex;
-    flex-direction: row; /* Display images from right to left */
-    flex-wrap: wrap; /* Allow wrapping of images if necessary */
-    justify-content: center; /* Center images horizontally */
-    gap: 20px; /* Space between images */
 }
 
+.content-area {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 20px;
+}
+
+/* Image Container Styles */
 .image-container {
     position: relative;
-    width: 150px; /* Set desired width */
-    height: 150px; /* Set desired height */
-    overflow: hidden; /* Ensure images do not overflow the container */
+    width: 150px;
+    height: 150px;
+    overflow: hidden;
     border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-    transition: transform 0.3s ease; /* Smooth scaling transition */
+    background-color: #fff;
+    cursor: pointer;
+    overflow: hidden;
+}
+
+.image-container::before {
+    content: '';
+    position: absolute;
+    bottom: -100%;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(128, 128, 128, 0.5); /* Gray overlay */
+    transition: bottom 0.3s ease;
+}
+
+.image-container:hover::before {
+    bottom: 0;
+}
+
+.image-container:hover .plus-button {
+    opacity: 1;
+    transition-delay: 0.3s; /* Delay appearance until after hover animation */
 }
 
 .image-container img {
     width: 100%;
     height: 100%;
-    object-fit: cover; /* Ensure the image covers the container while maintaining aspect ratio */
-}
-
-.image-container:hover {
-    transform: scale(1.05); /* Scale up image on hover */
-    cursor: pointer;
+    object-fit: cover;
 }
 
 .image-label {
@@ -131,79 +136,99 @@ body {
     bottom: 0;
     left: 0;
     width: 100%;
-    background-color: rgba(0, 0, 0, 0.7); /* Semi-transparent background */
+    background-color: rgba(0, 0, 0, 0.7);
     color: white;
     text-align: center;
     padding: 5px;
     border-radius: 0 0 10px 10px;
     font-size: 14px;
     box-sizing: border-box;
-    transition: transform 0.3s ease, background-color 0.3s ease; /* Smooth transitions for transform and background-color */
 }
 
-.image-container:hover {
-    transform: scale(1.05); /* Scale up label on hover */
+/* Circle Indicator */
+.circle-indicator {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    border: 2px solid #fff;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
 }
 
-/* Modal Window Styles */
-/* Modal Window Styles */
-.modal {
-    display: none; /* Hidden by default */
-    position: fixed; /* Stay in place */
-    z-index: 1; /* Sit on top */
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
-    overflow: auto; /* Enable scroll if needed */
-    background-color: rgba(0, 0, 0, 0.5); /* Black with opacity */
-    justify-content: center; /* Center content horizontally */
-    align-items: center; /* Center content vertically */
+.circle-indicator.green {
+    background-color: green;
 }
 
-.modal-content {
-    background-color: #fefefe;
-    margin: auto; /* Centered horizontally */
-    padding: 20px;
-    border: 1px solid #888;
-    width: 80%; /* Set width as needed */
-    max-width: 400px; /* Maximum width */
-    border-radius: 10px; /* Rounded corners */
-    position: relative;
+.circle-indicator.red {
+    background-color: red;
 }
 
-#modalImage {
-    max-width: 100%;
-    height: auto;
-    border-radius: 20px;
+.circle-indicator.yellow {
+    background-color: yellow;
 }
 
+/* Plus Button */
+.plus-button {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    background-color: #28a745;
+    color: white;
+    border: none;
+    font-size: 24px;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    cursor: pointer;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
 
+.plus-button:hover {
+    background-color: #218838;
+    transform: scale(1.1);
+}
 
+/* Right Side */
 .right-side {
     width: 25%;
     display: flex;
     flex-direction: column;
-    align-items: center;
-    gap: 20px; /* Space between elements in the right side */
+    gap: 20px;
+    height: 100%;
 }
 
-/* Selected Filters Box */
-.selected-filter-box {
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    padding: 10px;
-    border: 1px solid #ccc;
+/* Filter Box Styles */
+.filter-box {
     background-color: #eaeaea;
+    border: 1px solid #ccc;
     border-radius: 15px;
+    padding: 10px;
+    overflow: auto;
+    flex: 1 1 auto;
 }
 
+.selected-filter-box {
+    flex: 0 0 auto; /* Do not flex */
+}
+
+.filter-box-title {
+    font-size: 18px;
+    font-weight: bold;
+    margin-bottom: 10px;
+    text-align: center;
+    border-bottom: 1px solid #ccc;
+    padding-bottom: 5px;
+}
+
+/* Selected Filters Content */
 .selected-filter-content {
     display: flex;
     flex-wrap: wrap;
-    gap: 0px; /* Space between selected filter items */
-    justify-content: center; /* Center selected filter items */
+    gap: 5px;
+    justify-content: center;
 }
 
 .selected-filter-item {
@@ -213,12 +238,11 @@ body {
     border: 1px solid #ccc;
     background-color: #fff;
     border-radius: 10px;
-    text-align: center; /* Center text in selected filter items */
 }
 
 .selected-filter-item span {
-    font-size: 16px;
-    margin-right: 10px;
+    font-size: 14px;
+    margin-right: 5px;
 }
 
 .filter-clear-button {
@@ -239,161 +263,98 @@ body {
     background-color: #cc0000;
 }
 
-/* Box 2: Filter Area 2 Styles */
-.filter-area-box {
-    width: 100%;
+.clear-all-button {
+    padding: 5px 10px;
+    border: none;
+    background-color: #dc3545;
+    color: white;
+    font-size: 16px;
+    border-radius: 50px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    margin-top: 10px;
 }
 
+.clear-all-button:hover {
+    background-color: #c82333;
+}
+
+/* Box 2 Filter Styles */
 .filter-area-2 {
-    width: 100%; /* Bigger width for Box 2 */
     display: flex;
-    flex-direction: column; /* Vertical layout for buttons */
-    padding: 20px;
-    border: 1px solid #ccc;
-    background-color: #f9f9f9;
-    border-radius: 15px;
-    align-items: center; /* Center buttons vertically */
+    flex-wrap: wrap;
+    gap: 10px;
+    padding: 0;
+    justify-content: center;
 }
 
 .filter-area-2 .filter-button {
+    flex: 1 1 calc(50% - 20px); /* Two buttons per row */
+    padding: 10px;
+    border: 1px solid #ccc;
+    color: white;
+    font-size: 14px;
+    border-radius: 30px;
+    cursor: pointer;
     background-color: #28a745;
-    margin-bottom: 10px; /* Space between buttons */
-    text-align: center; /* Center text in buttons */
-    width: 100%; /* Ensure buttons take full width of their container */
+    text-align: center;
+    min-width: 100px; /* Prevent buttons from becoming too small */
 }
 
 .filter-area-2 .filter-button:hover {
     background-color: #1e7e34;
 }
 
-/* General Filter Button Styles */
-.filter-button {
-    padding: 12px;
-    border: 1px solid #ccc;
-    color: white;
-    font-size: 16px;
-    border-radius: 50px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-}
-
-.filter-button:hover {
-    /* Hover effects are handled individually for Box 1 and Box 2 */
-}
-
-.clear-all-button {
-    padding: 5px 5px;
-    border: none;
-    background-color: #dc3545; /* A red color */
-    color: white;
-    font-size: 16px;
-    border-radius: 50px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-    margin-top: 5px; /* Add some space above the button */
-}
-
-.clear-all-button:hover {
-    background-color: #c82333; /* Darker red on hover */
-}
-
-.content-item img {
-    max-width: 100%; /* Adjust as needed */
-    height: auto; /* Maintain aspect ratio */
-    border-radius: 10px; /* Optional: for rounded corners */
-}
-
-/* Add this to your existing CSS */
-@keyframes fadeIn {
-    from { opacity: 0; }
-    to { opacity: 1; }
-}
-
-@keyframes fadeOut {
-    from { opacity: 1; }
-    to { opacity: 0; }
-}
-
-.image-container {
-    animation-duration: 0.5s;
-    animation-fill-mode: both;
-}
-
-.image-container.fade-in {
-    animation-name: fadeIn;
-}
-
-.image-container.fade-out {
-    animation-name: fadeOut;
-}
-
-.content-image {
-    object-fit: cover; /* Ensures the image covers the entire area without distortion */
-}
-/* Add this CSS to your existing stylesheet */
-
-/* Center text in the modal */
-#imageModal .modal-content {
+/* Circle Color Filters */
+.circle-filters {
     display: flex;
-    flex-direction: column;
-    align-items: center;
+    flex-wrap: nowrap;
+    gap: 10px;
+    padding: 0;
     justify-content: center;
-    text-align: center;
-    position: relative; /* To position the close button */
 }
 
-/* Center text in the content area */
-#content-area .image-container .image-label {
-    text-align: center;
-    width: 100%;
-}
-
-/* Center text in the selected filter box */
-#selected-filter-content {
-    text-align: center;
-}
-
-/* Style for the close button */
-.modal-close-button {
-    position: absolute;
-    top: 10px;
-    right: 10px;
-    background: none;
-    border: none;
-    font-size: 20px;
+.circle-filters .filter-button {
+    flex: 1 1 auto;
+    padding: 10px;
+    border: 1px solid #ccc;
+    color: #333;
+    font-size: 14px;
+    border-radius: 30px;
     cursor: pointer;
-.modal {
-    display: none; /* Hidden by default */
-    position: fixed; /* Stay in place */
-    z-index: 1; /* Sit on top */
-    left: 0;
-    top: 0;
-    width: 100%; /* Full width */
-    height: 100%; /* Full height */
-    overflow: auto; /* Enable scroll if needed */
-    background-color: rgb(0,0,0); /* Fallback color */
-    background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
-    justify-content: center;
-    align-items: center;
-}
-
-
-#modalImage {
-    display: block;
-    margin: auto;
-    max-width: 80%;
-    max-height: 80%;
-}
-
-#modalCustomContent {
+    background-color: #eaeaea;
     text-align: center;
-    margin-top: 20px;
-    color: white;
-}
+    min-width: 80px; /* Prevent buttons from becoming too small */
+    max-width: 150px; /* Prevent buttons from becoming too large */
 }
 
-/* Modal background */
-#imageModal {
+.circle-filters .filter-button:hover {
+    background-color: #d4d4d4;
+}
+
+.circle-icon {
+    display: inline-block;
+    width: 15px;
+    height: 15px;
+    border-radius: 50%;
+    margin-right: 5px;
+    vertical-align: middle;
+}
+
+.circle-icon.green {
+    background-color: green;
+}
+
+.circle-icon.red {
+    background-color: red;
+}
+
+.circle-icon.yellow {
+    background-color: yellow;
+}
+
+/* Modal Window Styles */
+.modal {
     display: none;
     position: fixed;
     z-index: 1;
@@ -401,654 +362,84 @@ body {
     top: 0;
     width: 100%;
     height: 100%;
-    overflow: auto;
-    background-color: rgba(0, 0, 0, 0.5); /* Black with opacity */
-    justify-content: center;
+    overflow-y: auto; /* Enable vertical scrolling if content is taller than viewport */
+    background-color: rgba(0, 0, 0, 0.5);
+}
+
+.modal-content {
+    background-color: #fefefe;
+    margin: 50px auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%;
+    max-width: 600px;
+    border-radius: 10px;
+    position: relative;
+    text-align: center;
+    display: flex; /* Center content */
+    flex-direction: column;
     align-items: center;
 }
 
-/* Reset and Base Styles */
-
-/* Container for the image and label */
-.image-container {
-    position: relative;
-    width: 150px; /* Set desired width */
-    height: 150px; /* Set desired height */
-    overflow: hidden; /* Ensure images do not overflow the container */
-    border-radius: 10px; /* Default border-radius */
-    box-shadow: inset 0 0 0 4px #000, inset -4px -4px 0 6px #CCC;
-    background-color: #FFF;
-    cursor: pointer;
-    transition: transform 0.3s ease, border-radius 0.3s ease 0.4s; /* Smooth scaling and delayed border-radius transition */
-}
-
-.image-container:before {
-    position: absolute;
-    left: 0;
-    bottom: 0;
-    content: "";
-    display: block;
+.modal-image-container {
     width: 100%;
-    height: 100%;
-    background-color: #1e1e1e;
-    border-radius: inherit; /* Inherit border-radius from the container */
-    transform-origin: 0 bottom 0;
-    transform: scaleY(0);
-    transition: .4s ease-out;
+    max-width: 400px; /* Set consistent max width */
+    max-height: 400px; /* Set consistent max height */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    margin-bottom: 20px;
 }
 
-.image-container:hover:before {
-    transform: scaleY(1);
+.modal-image {
+    max-width: 100%;
+    max-height: 100%;
+    width: auto;
+    height: auto;
+    object-fit: contain; /* Maintain aspect ratio */
 }
 
-.image-container:hover {
-    border-radius: 20px; /* Active border-radius */
+#modalCustomContent {
+    margin-top: 10px;
 }
 
-/* Image inside the container */
-.image-container img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover; /* Ensure the image covers the container while maintaining aspect ratio */
-}
-
-/* Label container */
-.image-label {
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    width: 100%;
-    background-color: #1e1e1e; /* Semi-transparent dark background */
-    color: white;
-    text-align: center;
-    padding: 4px;
-    font-size: 14px;
-    box-sizing: border-box;
-    transition: transform 0.3s ease, background-color 0.3s ease; /* Smooth transitions for transform and background-color */
-}
-
-.image-container:hover .image-label {
-    color: #FFF;
-    transform: translateY(-100%); /* Slide up the label */
-}
-
-/* New custom content container */
-.custom-info {
-    display: none; /* Hidden by default */
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    width: 100%;
-    background-color: rgba(255, 255, 255, 0.9); /* Light semi-transparent background */
-    color: black;
-    text-align: center;
-    padding: 10px;
-    font-size: 14px;
-    box-sizing: border-box;
-    transition: transform 0.3s ease; /* Smooth transition for transform */
-}
-
-.image-container:hover .custom-info {
-    display: block; /* Show custom content */
-    transform: translateY(-100%); /* Slide up the custom content */
-}
-
-/* Post title styling */
-.post-title {
-    position: relative;
-    font-size: 2rem;
-    font-weight: 700;
-    line-height: 1.333;
-    transition: .4s ease-out;
-}
-.image-container {
-    position: relative;
-}
-
-.heart-button {
+.close-modal {
     position: absolute;
     top: 10px;
     right: 10px;
     background: none;
     border: none;
-    font-size: 24px;
+    font-size: 30px;
+    font-weight: bold;
+    color: #aaa;
     cursor: pointer;
-    opacity: 0;
-    transition: transform 0.2s ease, opacity 0.5s ease;
 }
 
-.image-container:hover .heart-button {
-    opacity: 1;
+.close-modal:hover,
+.close-modal:focus {
+    color: #000;
+    cursor: pointer;
 }
 
-.heart-button.liked {
-    color: red;
-    transform: scale(1.2);
-}
-/* Style for the plus button */
-.plus-button {
-    position: absolute;
-    top: 10px;
-    left: 10px;
-    background-color: #28a1a7; /* Green background */
-    color: white; /* White text */
-    border: none; /* Remove default border */
-    border-radius: 50%; /* Make it circular */
-    width: 30px; /* Set width */
-    height: 30px; /* Set height */
-    font-size: 20px; /* Set font size */
-    cursor: pointer; /* Pointer cursor on hover */
-    display: flex; /* Flexbox for centering */
-    align-items: center; /* Center vertically */
-    justify-content: center; /* Center horizontally */
-    transition: transform 0.2s ease, opacity 0.5s ease; /* Smooth transform and opacity transition */
-    opacity: 0; /* Initially hidden */
-}
-
-.image-container:hover .plus-button {
-    opacity: 1; /* Show button on hover */
-}
-
-.plus-button:hover {
-    background-color: #218884; /* Darker green on hover */
-    transform: scale(1.2); /* Scale up on hover */
-}
-
-/* Combined Media Query for Phone and Tablet Devices */
-@media (min-width: 1024px) {
-    body {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        background-color: #f0f0f0;
-        font-family: Arial, sans-serif;
-        overflow: hidden;
-    }
-}
-
-/* Combined Media Query for Phone and Tablet Devices 
-    body {
-        overflow-x: auto;
-    }
-*/
-
-/* Combined Media Query for Phone and Tablet Devices */
-/* Combined Media Query for Phone and Tablet Devices */
+/* Media Queries for Responsive Design */
 @media (max-width: 1024px) {
-    body {
-        overflow-x: hidden; /* Prevent horizontal overflow on body */
-    }
-
     .container {
-        display: flex;
         flex-direction: column;
-        width: 100%;
-        height: auto;
-        margin-top: 5px;
-    }
-
-    /* Search Bar Styles */
-    .search-container {
-        width: 100%;
-        display: flex;
-        justify-content: center;
-        margin-top: 5px;
-    }
-
-    .search-bar {
-        width: 85%;
-        max-width: 500px;
-        padding: 6px;
-        font-size: 12px;
-    }
-
-    /* Box 1: Filter Area 1 Styles */
-    .box-1-container {
-        width: 100%;
-        display: flex;
-        flex-direction: row; /* Horizontal layout */
-        justify-content: center;
-        margin-top: 5px;
-        overflow-x: auto; /* Allow horizontal scrolling */
-        gap: 4px; /* Space between buttons */
-    }
-
-    .filter-area-1 {
-        display: flex;
-        flex-direction: row; /* Horizontal layout */
-        flex-wrap: nowrap;
-        gap: 4px;
-        padding: 6px;
-        overflow-x: auto; /* Allow horizontal scrolling */
-        width: 100%; /* Full width for Box 1 */
-    }
-
-    .filter-area-1 .filter-button {
-        font-size: 12px; /* Smaller font size for Box 1 */
-        padding: 4px 8px; /* Reduced padding */
-    }
-
-    /* Box 2: Filter Area 2 Styles */
-    .box-2-container {
-        width: 100%;
-        display: flex;
-        flex-direction: row; /* Horizontal layout similar to Box 1 */
-        justify-content: center;
-        margin-top: 5px;
-        overflow-x: auto; /* Allow horizontal scrolling */
-        gap: 4px; /* Space between buttons */
-    }
-
-    .filter-area-2 {
-        display: flex;
-        flex-direction: row; /* Horizontal layout */
-        flex-wrap: nowrap;
-        gap: 4px;
-        padding: 6px;
-        overflow-x: auto; /* Allow horizontal scrolling */
-        width: 100%; /* Full width for Box 2 */
-    }
-
-    .filter-area-2 .filter-button {
-        font-size: 12px; /* Same font size as Box 1 buttons */
-        padding: 4px 8px; /* Same padding as Box 1 buttons */
-    }
-
-    /* Main Content and Right Side Styles */
-    .content-container {
-        width: 100%;
-        max-height: 50vh; /* Adjusted height */
-        background-color: #e2e2e2;
-        border-radius: 10px;
-        margin-right: 0;
-        padding: 6px;
-        margin-bottom: 10px; /* Added margin to the bottom */
-        overflow-y: auto; /* Enable vertical scrolling */
-    }
-
-    .image-container {
-        width: 80px; /* Adjust image size */
-        height: 80px; /* Adjust image size */
-        margin: 4px; /* Adjust margin */
-    }
-
-    .image-container img {
-        width: 100%;
-        height: 100%;
-    }
-
-    .image-label {
-        font-size: 12px; /* Adjust font size for labels */
-        padding: 2px; /* Adjust padding */
-    }
-
-    /* Modal Window Styles */
-    .modal-content {
-        width: 85%;
-        max-width: 250px;
-        padding: 6px;
-        overflow-y: auto; /* Allow scrolling in modal */
-    }
-
-    #modalImage {
-        max-width: 100%;
-        max-height: 50vh; /* Ensure image fits well */
-    }
-
-    .right-side {
-        width: 100%;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        gap: 8px; /* Reduced gap */
-    }
-
-    .selected-filter-box {
-        width: 70%; /* Made box smaller */
-        margin: 0 auto; /* Center alignment */
-        padding: 4px; /* Reduced padding */
-    }
-
-    .clear-all-button {
-        padding: 4px;
-        font-size: 12px; /* Smaller font size */
-    }
-
-    .content-item img {
-        width: 100%;
         height: auto;
     }
 
-    .custom-info {
-        display: block;
-        padding: 4px;
-    }
-
-    .heart-button,
-    .plus-button {
-        font-size: 18px; /* Adjusted font size */
-    }
-
-    /* Hover Button Styles */
-    .filter-button:hover {
-        font-size: 10px; /* Smaller font size on hover */
-        padding: 2px 6px; /* Reduced padding on hover */
-    }
-}
-
-@media (orientation: portrait) {
-/* Combined Media Query for Phone and Tablet Devices */
-@media (max-width: 1024px) {
-    .heart-button,
-    .plus-button {
-        font-size: 16px; /* Smaller font size for tablets */
-        width: 24px; /* Smaller width */
-        height: 24px; /* Smaller height */
-    }
-    .container {
-        display: flex;
-        flex-direction: column;
-        width: 100%;
-        height: auto;
-        margin-top: 5px;
-    }
-
-    /* Search Bar Styles */
-    .search-container {
-        width: 100%;
-        display: flex;
-        justify-content: center;
-        margin-top: 5px;
-    }
-
-    .search-bar {
-        width: 85%;
-        max-width: 500px;
-        padding: 4px; /* Further reduced padding */
-        font-size: 10px; /* Smaller font size */
-    }
-
-    /* Box 1: Filter Area 1 Styles */
-    .box-1-container {
-        width: 100%;
-        display: flex;
-        flex-direction: row; /* Horizontal layout */
-        justify-content: center;
-        margin-top: 5px;
-        overflow-x: auto; /* Allow horizontal scrolling */
-        gap: 2px; /* Reduced gap between buttons */
-    }
-
-    .filter-area-1 {
-        display: flex;
-        flex-direction: row; /* Horizontal layout */
-        flex-wrap: nowrap;
-        gap: 2px; /* Reduced gap */
-        padding: 4px; /* Further reduced padding */
-        overflow-x: auto; /* Allow horizontal scrolling */
-        width: 100%; /* Full width for Box 1 */
-    }
-
-    .filter-area-1 .filter-button {
-        font-size: 8px; /* Smaller font size for Box 1 */
-        padding: 2px 4px; /* Reduced padding */
-    }
-
-    /* Box 2: Filter Area 2 Styles */
-    .box-2-container {
-        width: 100%;
-        display: flex;
-        flex-direction: row; /* Horizontal layout */
-        justify-content: center;
-        margin-top: 5px;
-        overflow-x: auto; /* Allow horizontal scrolling */
-        gap: 2px; /* Reduced gap */
-        background-color: transparent; /* No background color for Box 2 */
-    }
-
-    .filter-area-2 {
-        display: flex;
-        flex-direction: row; /* Horizontal layout */
-        flex-wrap: nowrap;
-        gap: 2px; /* Reduced gap */
-        padding: 4px; /* Further reduced padding */
-        overflow-x: auto; /* Allow horizontal scrolling */
-        width: 100%; /* Full width for Box 2 */
-        background-color: transparent; /* No background color */
-    }
-
-    .filter-area-2 .filter-button {
-        font-size: 8px; /* Same font size as Box 1 buttons */
-        padding: 2px 4px; /* Same padding as Box 1 buttons */
-    }
-
-    /* Main Content and Right Side Styles */
-    .content-container {
-        width: 100%;
-        max-height: 50vh; /* Adjusted height */
-        background-color: #e2e2e2;
-        border-radius: 10px;
-        margin-right: 0;
-        padding: 4px; /* Further reduced padding */
-        margin-bottom: 8px; /* Reduced margin to the bottom */
-        overflow-y: auto; /* Enable vertical scrolling */
-    }
-
-    .image-container {
-        width: 60px; /* Adjust image size */
-        height: 60px; /* Adjust image size */
-        margin: 2px; /* Reduced margin */
-    }
-
-    .image-container img {
-        width: 100%;
-        height: 100%;
-    }
-
-    .image-label {
-        font-size: 6px; /* Smaller font size for labels */
-        padding: 2px; /* Adjusted padding */
-    }
-
-    /* Modal Window Styles */
-    .modal-content {
-        width: 85%;
-        max-width: 200px; /* Smaller max width for modal */
-        padding: 4px; /* Further reduced padding */
-        overflow-y: auto; /* Allow scrolling in modal */
-    }
-
-    #modalImage {
-        max-width: 100%;
-        max-height: 50vh; /* Ensure image fits well */
-    }
-
-    .right-side {
-        width: 100%;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        gap: 6px; /* Reduced gap */
-    }
-
-    .selected-filter-box {
-        width: 100%; /* Match width of Box 2 */
-        display: flex;
-        flex-direction: row; /* Horizontal layout similar to Box 2 */
-        justify-content: center;
-        padding: 4px; /* Further reduced padding */
-        background-color: #f0f0f0; /* Light background color for selected filter content */
-        border-radius: 10px; /* Rounded corners */
-        box-sizing: border-box; /* Ensure padding is included in width */
-        margin-bottom: 8px; /* Reduced space below the selected filter box */
-        flex-wrap: wrap; /* Allow wrapping of boxes */
-    }
-
-    .selected-filter-box .filter-button {
-        font-size: 6px; /* Smaller font size for selected filter box buttons */
-        padding: 2px 2px; /* Further reduced padding */
-        margin: 2px; /* Smaller margin between buttons */
-    }
-
-    .clear-all-button {
-        padding: 2px; /* Reduced padding */
-        font-size: 10px; /* Smaller font size */
-    }
-
-    .content-item img {
-        width: 100%;
-        height: auto;
-    }
-
-    .custom-info {
-        display: block;
-        padding: 2px; /* Reduced padding */
-    }
-
-    .heart-button,
-    .plus-button {
-        font-size: 16px; /* Adjusted font size */
-    }
-
-    /* Hover Button Styles */
-    .filter-button:hover {
-        font-size: 6px; /* Smaller font size on hover */
-        padding: 2px 2px; /* Further reduced padding on hover */
-    }
-
-}
-/* Additional Media Query for Smaller Devices (Phones) */
-@media (max-width: 768px) {
-    .heart-button,
-    .plus-button {
-        font-size: 14px; /* Even smaller font size for phones */
-        width: 20px; /* Smaller width */
-        height: 20px; /* Smaller height */
-    }
-    /* Box 2: Filter Area 2 Styles */
-.box-2-container {
-    width: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center; /* Center vertically */
-    margin-top: 5px;
-    overflow-x: auto; /* Allow horizontal scrolling */
-    gap: 2px; /* Reduced gap */
-    background-color: transparent; /* No background color for Box 2 */
-}
-
-.filter-area-2 {
-    display: flex;
-    flex-direction: row; /* Horizontal layout */
-    justify-content: center;
-    align-items: center; /* Center vertically */
-    gap: 2px; /* Reduced gap */
-    padding: 4px; /* Further reduced padding */
-    overflow-x: auto; /* Allow horizontal scrolling */
-    width: 100%; /* Full width for Box 2 */
-    background-color: transparent; /* No background color */
-}
-
-/* Center text in the container */
-.center-text {
-    width: 100%; /* Full width to ensure centering */
-    text-align: center; /* Center text horizontally */
-    font-size: 8px; /* Adjust font size if needed */
-    padding: 2px; /* Padding around the text */
-}
-
-    .search-bar {
-        margin: 5px;
-        font-size: 8px; /* Smaller font size */
-        padding: 10px; /* Further reduced padding */
-    }
-
-    .filter-area-1 {
-        padding: 2px; /* Further reduced padding */
-    }
-
-    .filter-area-1 .filter-button {
-        font-size: 16px; /* Smaller font size */
-        padding: 8px 10px; /* Further reduced padding */
-    }
-
-    .filter-area-2 {
-        padding: 2px; /* Further reduced padding */
-        background-color: transparent; /* No background color */
-    }
-
-    .filter-area-2 .filter-button {
-        margin-top: 8px;
-        font-size: 10px; /* Same font size as Box 1 buttons */
-        padding: 8px 14px; /* Same padding as Box 1 buttons */
-    }
-
-    .content-container {
-        padding: 2px; /* Further reduced padding */
-        max-height: 40vh; /* Adjusted height for smaller devices */
-        overflow-y: auto; /* Ensure scrolling */
-        margin-bottom: 8px; /* Reduced margin to the bottom */
-    }
-
-    .image-container {
-        width: 150px; /* Smaller image width */
-        height: 150px; /* Smaller image height */
-    }
-
-    .image-label {
-        font-size: 6px; /* Smaller font size for labels */
-    }
-
-    .modal-content {
-        max-width: 380px;/* Smaller max width for modal */
-        padding: 2px; /* Further reduced padding */
-    }
-
-    #modalImage {
-        max-height: 40vh; /* Limit image height */
-    }
-
-    .selected-filter-item {
-        font-size: 4px; /* Smaller font size */
-    }
-
-    .filter-clear-button {
-        width: 10px; /* Smaller button width */
-        height: 10px; /* Smaller button height */
-        font-size: 4px; /* Smaller font size */
-    }
-
-    .clear-all-button {
-        font-size: 8px; /* Smaller font size */
-    }
-
-    .heart-button,
-    .plus-button {
-        font-size: 14px; /* Adjusted font size */
-    }
-    .filter-button:hover {
-        /* Hover effects are handled individually for Box 1 and Box 2 */
-    }
-}}
-@media (orientation: landscape) {
-    .container,
-    .search-container,
-    .search-bar,
-    .box-1-container,
-    .filter-area-1,
-    .filter-area-2,
     .content-container,
-    .image-container,
-    .image-label,
-    .modal-content,
-    #modalImage,
-    .right-side,
-    .selected-filter-box,
-    .clear-all-button,
-    .content-item img,
-    .custom-info,
-    .heart-button,
-    .plus-button {
-        /* Ensure these elements have the same styles in landscape mode */
+    .right-side {
+        width: 100%;
+    }
+
+    .right-side {
+        align-items: stretch;
+    }
+
+    .filter-area-2 .filter-button,
+    .circle-filters .filter-button {
+        flex: 1 1 100%;
     }
 }
