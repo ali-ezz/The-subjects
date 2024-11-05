@@ -427,9 +427,10 @@ h1 {
 /* Mobile-Specific Styles for Phones Only */
 /* =================================================================================== */
 
+/* Mobile-Specific Styles for Phones Only */
 @media only screen and (max-width: 767px) {
 
-    /* Hide main content and show a prompt in landscape mode */
+    /* Restrict the site to portrait mode */
     @media (orientation: landscape) {
         body > * {
             display: none;
@@ -451,7 +452,25 @@ h1 {
     /* Portrait orientation styles */
     @media (orientation: portrait) {
 
-        /* Container adjustments */
+        /* Adjust header and search bar */
+        h1 {
+            font-size: 36px; /* Increase font size */
+            margin: 10px 0;
+        }
+
+        .search-bar {
+            width: 90%;
+            font-size: 18px; /* Increase font size */
+            padding: 12px;
+        }
+
+        /* Box 1 filter buttons */
+        .filter-area-1 .filter-button {
+            font-size: 18px; /* Increase font size */
+            padding: 12px 16px;
+        }
+
+        /* Adjust container layout */
         .container {
             flex-direction: column;
             width: 100%;
@@ -459,7 +478,7 @@ h1 {
             margin: 10px 0;
         }
 
-        /* Content container adjustments */
+        /* Adjust content area */
         .content-container {
             width: 100%;
             margin-right: 0;
@@ -468,45 +487,27 @@ h1 {
             max-height: 400px; /* Add a small scrollbar */
         }
 
-        /* Content area adjustments */
         .content-area {
             gap: 10px;
         }
 
-        /* Image container and content adjustments */
+        /* Increase size of content items */
         .image-container {
-            width: 120px; /* Make content items larger */
-            height: 120px;
+            width: 120px; /* Increase width */
+            height: 120px; /* Increase height */
         }
 
         .image-label {
-            font-size: 12px;
+            font-size: 12px; /* Adjust font size */
             padding: 3px;
         }
 
-        /* Header and search bar adjustments */
-        h1 {
-            font-size: 36px; /* Make the heading bigger */
-            margin: 10px 0;
-        }
-
-        .search-bar {
-            width: 90%;
-            font-size: 18px; /* Make the search bar bigger */
-            padding: 12px;
-        }
-
-        /* Box 1 filter adjustments */
-        .filter-area-1 .filter-button {
-            font-size: 18px; /* Make Box 1 buttons bigger */
-            padding: 12px 16px;
-        }
-
-        /* Right side adjustments */
+        /* Adjust right side filters */
         .right-side {
             width: 100%;
             flex-direction: column;
             align-items: stretch;
+            margin-top: 20px;
         }
 
         .filter-box {
@@ -514,7 +515,7 @@ h1 {
             margin-bottom: 10px;
         }
 
-        /* Place color filters next to Box 2 filter box */
+        /* Display color filters and Box 2 filters side by side */
         .filter-box-wrapper {
             display: flex;
             flex-direction: row;
@@ -525,7 +526,7 @@ h1 {
             width: calc(50% - 5px);
         }
 
-        /* Adjust circle filters */
+        /* Adjust circle color filters */
         .circle-filters {
             flex-wrap: wrap;
         }
@@ -535,7 +536,5 @@ h1 {
             min-width: unset;
             max-width: unset;
         }
-
     }
-
 }
