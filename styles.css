@@ -428,6 +428,7 @@ h1 {
 /* =================================================================================== */
 
 /* Mobile-Specific Styles for Phones Only */
+
 @media only screen and (max-width: 767px) {
 
     /* Restrict the site to portrait mode */
