@@ -423,23 +423,119 @@ h1 {
 }
 
 /* Media Queries for Responsive Design */
-@media (max-width: 1024px) {
-    .container {
-        flex-direction: column;
-        height: auto;
+/* =================================================================================== */
+/* Mobile-Specific Styles for Phones Only */
+/* =================================================================================== */
+
+@media only screen and (max-width: 767px) {
+
+    /* Hide main content and show a prompt in landscape mode */
+    @media (orientation: landscape) {
+        body > * {
+            display: none;
+        }
+        body::before {
+            content: 'يرجى تدوير جهازك إلى الوضع الرأسي لعرض هذا الموقع';
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            font-size: 24px;
+            text-align: center;
+            padding: 20px;
+            direction: rtl;
+            color: #555;
+        }
     }
 
-    .content-container,
-    .right-side {
-        width: 100%;
+    /* Portrait orientation styles */
+    @media (orientation: portrait) {
+
+        /* Container adjustments */
+        .container {
+            flex-direction: column;
+            width: 100%;
+            height: auto;
+            margin: 10px 0;
+        }
+
+        /* Content container adjustments */
+        .content-container {
+            width: 100%;
+            margin-right: 0;
+            padding: 10px;
+            overflow-y: auto;
+            max-height: 400px; /* Add a small scrollbar */
+        }
+
+        /* Content area adjustments */
+        .content-area {
+            gap: 10px;
+        }
+
+        /* Image container and content adjustments */
+        .image-container {
+            width: 120px; /* Make content items larger */
+            height: 120px;
+        }
+
+        .image-label {
+            font-size: 12px;
+            padding: 3px;
+        }
+
+        /* Header and search bar adjustments */
+        h1 {
+            font-size: 36px; /* Make the heading bigger */
+            margin: 10px 0;
+        }
+
+        .search-bar {
+            width: 90%;
+            font-size: 18px; /* Make the search bar bigger */
+            padding: 12px;
+        }
+
+        /* Box 1 filter adjustments */
+        .filter-area-1 .filter-button {
+            font-size: 18px; /* Make Box 1 buttons bigger */
+            padding: 12px 16px;
+        }
+
+        /* Right side adjustments */
+        .right-side {
+            width: 100%;
+            flex-direction: column;
+            align-items: stretch;
+        }
+
+        .filter-box {
+            width: 100%;
+            margin-bottom: 10px;
+        }
+
+        /* Place color filters next to Box 2 filter box */
+        .filter-box-wrapper {
+            display: flex;
+            flex-direction: row;
+            gap: 10px;
+        }
+
+        .filter-box.filter-box-half {
+            width: calc(50% - 5px);
+        }
+
+        /* Adjust circle filters */
+        .circle-filters {
+            flex-wrap: wrap;
+        }
+
+        .circle-filters .filter-button {
+            flex: 1 1 auto;
+            min-width: unset;
+            max-width: unset;
+        }
+
     }
 
-    .right-side {
-        align-items: stretch;
-    }
-
-    .filter-area-2 .filter-button,
-    .circle-filters .filter-button {
-        flex: 1 1 100%;
-    }
 }
