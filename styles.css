@@ -427,91 +427,146 @@ h1 {
 /* Mobile-Specific Styles for Phones Only */
 /* =================================================================================== */
 
+/* Media Queries for Responsive Design */
+/* =================================================================================== */
 /* Mobile-Specific Styles for Phones Only */
-
-@media (min-width: 600px) {
-        /* Adjust header and search bar */
-        h1 {
-            font-size: 36px; /* Increase font size */
-            margin: 10px 0;
-        }
-
-        .search-bar {
-            width: 90%;
-            font-size: 18px; /* Increase font size */
-            padding: 12px;
-        }
-
-        /* Box 1 filter buttons */
-        .filter-area-1 .filter-button {
-            font-size: 18px; /* Increase font size */
-            padding: 12px 16px;
-        }
-
-        /* Adjust container layout */
-        .container {
-            flex-direction: column;
-            width: 100%;
-            height: auto;
-            margin: 10px 0;
-        }
-
-        /* Adjust content area */
-        .content-container {
-            width: 100%;
-            margin-right: 0;
-            padding: 10px;
-            overflow-y: auto;
-            max-height: 400px; /* Add a small scrollbar */
-        }
-
-        .content-area {
-            gap: 10px;
-        }
-
-        /* Increase size of content items */
-        .image-container {
-            width: 120px; /* Increase width */
-            height: 120px; /* Increase height */
-        }
-
-        .image-label {
-            font-size: 12px; /* Adjust font size */
-            padding: 3px;
-        }
-
-        /* Adjust right side filters */
-        .right-side {
-            width: 100%;
-            flex-direction: column;
-            align-items: stretch;
-            margin-top: 20px;
-        }
-
-        .filter-box {
-            width: 100%;
-            margin-bottom: 10px;
-        }
-
-        /* Display color filters and Box 2 filters side by side */
-        .filter-box-wrapper {
-            display: flex;
-            flex-direction: row;
-            gap: 10px;
-        }
-
-        .filter-box.filter-box-half {
-            width: calc(50% - 5px);
-        }
-
-        /* Adjust circle color filters */
-        .circle-filters {
-            flex-wrap: wrap;
-        }
-
-        .circle-filters .filter-button {
-            flex: 1 1 auto;
-            min-width: unset;
-            max-width: unset;
-        }
+/* =================================================================================== */
+@media (orientation: portrait) {
+    /* Container adjustments */
+    .container {
+      flex-direction: column;
+      width: 100%;
+      height: auto;
+      margin: 10px 0;
     }
+
+    /* Content container adjustments */
+    .content-container {
+      width: 100%;
+      margin-right: 0;
+      padding: 10px;
+      overflow-y: auto;
+      max-height: 400px; /* Add a small scrollbar */
+    }
+
+    /* Content area adjustments */
+    .content-area {
+      gap: 10px;
+    }
+
+    /* Image container and content adjustments */
+    .image-container {
+      width: 120px; /* Make content items larger */
+      height: 120px;
+    }
+
+    .image-label {
+      font-size: 12px;
+      padding: 3px;
+    }
+
+    /* Header and search bar adjustments */
+    h1 {
+      font-size: 36px; /* Make the heading bigger */
+      margin: 10px 0;
+    }
+
+    .search-bar {
+      width: 90%;
+      font-size: 18px; /* Make the search bar bigger */
+      padding: 12px;
+    }
+
+    /* Box 1 filter adjustments */
+    .filter-area-1 .filter-button {
+      font-size: 18px; /* Make Box 1 buttons bigger */
+      padding: 12px 16px;
+    }
+
+    /* Right side adjustments */
+    .right-side {
+      width: 100%;
+      flex-direction: column;
+      align-items: stretch;
+    }
+
+    .filter-box {
+      width: 100%;
+      margin-bottom: 10px;
+    }
+
+    /* Place color filters next to Box 2 filter box */
+    .filter-box-wrapper {
+      display: flex;
+      flex-direction: row;
+      gap: 10px;
+    }
+
+    .filter-box.filter-box-half {
+      width: calc(50% - 5px);
+    }
+
+    /* Adjust circle filters */
+    .circle-filters {
+      flex-wrap: wrap;
+    }
+
+    .circle-filters .filter-button {
+      flex: 1 1 auto;
+      min-width: unset;
+      max-width: unset;
+    }
+
+    /* Adjusting all other classes as needed */
+    /* Adjust .search-container */
+
+
+    /* Adjust .filter-area-1 */
+
+
+    /* Adjust .filter-button */
+
+    /* Adjust .content-area */
+    .content-area {
+      align-items: center;
+      gap: 30px;
+    }
+
+    /* Adjust .plus-button */
+    .plus-button {
+      top: 5px;
+      left: 5px;
+      width: 25px;
+      height: 25px;
+      font-size: 20px;
+    }
+
+    /* Adjust .filter-box-title */
+    .filter-box-title {
+      font-size: 16px;
+    }
+
+    /* Adjust .selected-filter-item */
+    .selected-filter-item {
+      padding: 3px;
+      font-size: 12px;
+    }
+
+    /* Adjust .clear-all-button */
+    .clear-all-button {
+      font-size: 14px;
+      padding: 5px;
+    }
+
+    /* Adjust modal styles */
+    .modal-content {
+      width: 90%;
+      margin: 30px auto;
+      padding: 15px;
+    }
+
+    .modal-image-container {
+      max-width: 300px;
+      max-height: 300px;
+    }
+  }
