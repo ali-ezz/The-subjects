@@ -429,26 +429,8 @@ h1 {
 
 /* Mobile-Specific Styles for Phones Only */
 
-@media only screen and (max-width: 767px) {
+@media only screen and (min-width: 767px) {
 
-    /* Restrict the site to portrait mode */
-    @media (orientation: landscape) {
-        body > * {
-            display: none;
-        }
-        body::before {
-            content: 'يرجى تدوير جهازك إلى الوضع الرأسي لعرض هذا الموقع';
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            font-size: 24px;
-            text-align: center;
-            padding: 20px;
-            direction: rtl;
-            color: #555;
-        }
-    }
 
     /* Portrait orientation styles */
     @media (orientation: portrait) {
