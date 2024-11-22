@@ -428,9 +428,7 @@ h1 {
 /* =================================================================================== */
 
 /* Mobile-Specific Styles for Phones Only */
-
 @media only screen and (max-width: 767px) {
-
     /* Restrict the site to portrait mode */
     @media (orientation: landscape) {
         body > * {
@@ -442,9 +440,9 @@ h1 {
             justify-content: center;
             align-items: center;
             height: 100vh;
-            font-size: 24px;
+            font-size: 20px; /* Reduced font size */
             text-align: center;
-            padding: 20px;
+            padding: 15px;   /* Reduced padding */
             direction: rtl;
             color: #555;
         }
@@ -452,23 +450,22 @@ h1 {
 
     /* Portrait orientation styles */
     @media (orientation: portrait) {
-
         /* Adjust header and search bar */
         h1 {
-            font-size: 36px; /* Increase font size */
-            margin: 10px 0;
+            font-size: 28px; /* Reduced font size */
+            margin: 5px 0;   /* Reduced margin */
         }
 
         .search-bar {
             width: 90%;
-            font-size: 18px; /* Increase font size */
-            padding: 12px;
+            font-size: 16px; /* Reduced font size */
+            padding: 10px;   /* Slightly reduced padding */
         }
 
         /* Box 1 filter buttons */
         .filter-area-1 .filter-button {
-            font-size: 18px; /* Increase font size */
-            padding: 12px 16px;
+            font-size: 16px;      /* Reduced font size */
+            padding: 10px 12px;   /* Reduced padding */
         }
 
         /* Adjust container layout */
@@ -476,31 +473,31 @@ h1 {
             flex-direction: column;
             width: 100%;
             height: auto;
-            margin: 10px 0;
+            margin: 5px 0;        /* Reduced margin */
         }
 
         /* Adjust content area */
         .content-container {
             width: 100%;
             margin-right: 0;
-            padding: 10px;
+            padding: 5px;         /* Reduced padding */
             overflow-y: auto;
-            max-height: 400px; /* Add a small scrollbar */
+            max-height: 300px;    /* Reduced max-height */
         }
 
         .content-area {
-            gap: 10px;
+            gap: 5px;             /* Reduced gap */
         }
 
-        /* Increase size of content items */
+        /* Adjust size of content items */
         .image-container {
-            width: 120px; /* Increase width */
-            height: 120px; /* Increase height */
+            width: 100px;         /* Reduced width */
+            height: 100px;        /* Reduced height */
         }
 
         .image-label {
-            font-size: 12px; /* Adjust font size */
-            padding: 3px;
+            font-size: 10px;      /* Reduced font size */
+            padding: 2px;         /* Reduced padding */
         }
 
         /* Adjust right side filters */
@@ -508,23 +505,23 @@ h1 {
             width: 100%;
             flex-direction: column;
             align-items: stretch;
-            margin-top: 20px;
+            margin-top: 15px;     /* Reduced margin */
         }
 
         .filter-box {
             width: 100%;
-            margin-bottom: 10px;
+            margin-bottom: 8px;   /* Reduced margin */
         }
 
         /* Display color filters and Box 2 filters side by side */
         .filter-box-wrapper {
             display: flex;
             flex-direction: row;
-            gap: 10px;
+            gap: 8px;             /* Reduced gap */
         }
 
         .filter-box.filter-box-half {
-            width: calc(50% - 5px);
+            width: calc(50% - 4px); /* Adjusted width calculation */
         }
 
         /* Adjust circle color filters */
