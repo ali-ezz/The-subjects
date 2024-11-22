@@ -429,12 +429,7 @@ h1 {
 
 /* Mobile-Specific Styles for Phones Only */
 
-@media only screen and (min-width: 767px) {
-
-
-    /* Portrait orientation styles */
-    @media (orientation: portrait) {
-
+@media (min-width: 600px) {
         /* Adjust header and search bar */
         h1 {
             font-size: 36px; /* Increase font size */
@@ -520,4 +515,3 @@ h1 {
             max-width: unset;
         }
     }
-}
