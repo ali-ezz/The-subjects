@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>مناهج التعلم</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <!-- Dummy header -->
+  <h1 style="padding-top: 20px; font-size: 30px; font-family: system-ui, sans-serif;">
+    مناهج التعلم
+  </h1>
+
+  <!-- Small circle for user info -->
+  <div id="userCircle" style="
+    position: absolute; top: 20px; right: 20px; 
+    width: 40px; height: 40px; 
+    border-radius: 50%; 
+    background-color: orange; 
+    cursor: pointer; 
+    display: flex; 
+    align-items: center; 
+    justify-content: center; 
+    color: white;
+    font-weight: bold;
+  ">
+    U
+  </div>
+
+  <!-- Hidden user info panel -->
+  <div id="userInfoPanel" style="
+    display: none; position: absolute; top: 70px; right: 20px; 
+    background: #fff; border: 1px solid #ccc; padding: 10px; 
+    border-radius: 10px; width: 220px;
+  ">
+    <div id="userNameDisplay" style="font-weight: bold; margin-bottom: 5px;"></div>
+    <div id="userGpa" style="font-size:14px;"></div>
+    <div id="userYear" style="font-size:14px;"></div>
+    <div id="userGmail" style="font-size:14px;"></div>
+    <!-- Password displayed only if you really want to (usually not recommended) -->
+    <!-- <div id="userPass" style="font-size:14px;word-wrap:break-word;"></div>  -->
+    <div style="margin-top: 5px;"><strong>Courses:</strong></div>
+    <ul id="userCoursesList" style="padding-left: 20px; max-height:120px; overflow-y:auto;"></ul>
+    <button onclick="handleLogout()" style="
+      margin-top: 10px; background:#ff5757; border:none; 
+      color: #fff; padding:5px 10px; border-radius:5px; cursor:pointer;">
+      Logout
+    </button>
+  </div>
+
+  <!-- Search Bar Container -->
+  <div class="search-container">
+    <input type="text" id="search-bar" class="search-bar" placeholder="...ما المادة التي تبحث عنها">
+  </div>
+
+  <!-- Box 1: Filter Area 1 -->
+  <div class="filter-container box-1-container">
+    <div class="filter-area filter-area-1">
+      <button class="filter-button" onclick="selectFilter('Filter 1')">مواد عامة</button>
+      <button class="filter-button" onclick="selectFilter('Filter 2')">علوم البيانات</button>
+      <button class="filter-button" onclick="selectFilter('Filter 3')">الوسائط</button>
+      <button class="filter-button" onclick="selectFilter('Filter 4')">الإنسان الآلي</button>
+    </div>
+  </div>
+
+  <!-- Main Content Container -->
+  <div class="container">
+    <!-- Content Area -->
+    <div class="content-container">
+      <div class="content-area" id="content-area">
+        <!-- Content items will be dynamically added here -->
+      </div>
+    </div>
+
+    <!-- Right Side: Selected Filters Box and Filters -->
+    <div class="right-side">
+      <!-- Selected Filters Box -->
+      <div class="filter-box selected-filter-box" id="selected-filter-box">
+        <div class="filter-box-title">المرشحات المختارة</div>
+        <div class="selected-filter-content" id="selected-filter-content">
+          <!-- Selected filters will be dynamically added here -->
+        </div>
+      </div>
+
+      <!-- Box 2 Filter Box -->
+      <div class="filter-box">
+        <div class="filter-box-title">المرشحات الثانوية</div>
+        <div class="filter-area filter-area-2">
+          <!-- Box 2 filters will be dynamically generated -->
+        </div>
+      </div>
+
+      <!-- Circle Color Filters Box -->
+      <div class="filter-box">
+        <div class="filter-box-title">حالة المادة</div>
+        <div class="filter-area circle-filters">
+          <button class="filter-button" onclick="selectCircleFilter('green')">
+            <div class="circle-icon green"></div>
+            يدرس
+          </button>
+          <button class="filter-button" onclick="selectCircleFilter('yellow')">
+            <div class="circle-icon yellow"></div>
+            قادم
+          </button>
+          <button class="filter-button" onclick="selectCircleFilter('red')">
+            <div class="circle-icon red"></div>
+            ملغى
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal -->
+  <div id="imageModal" class="modal">
+    <div class="modal-content">
+      <button class="close-modal" onclick="closeModal()">×</button>
+      <!-- Updated modal image container -->
+      <div class="modal-image-container">
+        <img id="modalImage" class="modal-image" alt="" />
+      </div>
+      <div id="modalCustomContent"></div>
+
+      <!-- Add/Remove buttons (shown/hidden in script based on user’s courses) -->
+      <button id="addCourseBtn" style="
+        background: #28a745; color: white;
+        border-radius: 5px; border: none;
+        padding: 5px 10px; margin-top: 10px; cursor: pointer;">
+        Add this course
+      </button>
+      <button id="removeCourseBtn" style="
+        background: #ff5757; color: white; 
+        border-radius: 5px; border: none;
+        padding: 5px 10px; margin-top: 10px; cursor: pointer;">
+        Remove this course
+      </button>
+    </div>
+  </div>
+
+  <!-- Our main script that also checks if user is logged in and handles profile functionality -->
+  <script src="script.js"></script>
+</body>
+</html>
+  <script type="module">
+    import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js/+esm'
+    // REPLACE with your actual info
+    const supabaseUrl = 'https://ekvnobxzryfxsvmwvhbj.supabase.co'
+    const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImVrdm5vYnh6cnlmeHN2bXd2aGJqIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MzU3MTkyNzQsImV4cCI6MjA1MTI5NTI3NH0.JYx3l4XtRJu58tAa3r-HTJBfDXZ2G50RgC6M69rZseg'
+    const supabase = createClient(supabaseUrl, supabaseKey);
+
+    // We import the original script logic as a module:
+    import * as mainScript from "./script.js";
+
+    // Store references to modalAddBtn and modalRemoveBtn
+    const addCourseBtn = document.getElementById("addCourseBtn");
+    const removeCourseBtn = document.getElementById("removeCourseBtn");
+
+    // Keep track of the CURRENT item label clicked
+    let currentCourseLabel = null;
+
+    // Hook into openModal so we know which course is selected
+    mainScript.openModal = function(imageSrc, label, customContent) {
+      const modal = document.getElementById('imageModal');
+      const modalImage = document.getElementById('modalImage');
+      const modalCustomContent = document.getElementById('modalCustomContent');
+
+      modalImage.src = imageSrc;
+      modalImage.style.display = 'block';
+      modalCustomContent.innerHTML = `<p style="margin: 10px; font-size: 18px;">${label}</p><div>${customContent}</div>`;
+      modal.style.display = 'flex';
+
+      // store the label so we know what to add
+      currentCourseLabel = label;
+    }
+
+    // override closeModal
+    mainScript.closeModal = function() {
+      const modal = document.getElementById('imageModal');
+      modal.style.display = 'none';
+      currentCourseLabel = null;
+    }
+
+    // Wire up addCourseBtn
+    addCourseBtn.addEventListener("click", async () => {
+      if (!currentCourseLabel) return;
+      const userID = localStorage.getItem('userID');
+      if (!userID) return alert("No logged in user.");
+
+      // Retrieve user row
+      const { data: userData, error } = await supabase
+        .from('users')
+        .select('*')
+        .eq('id', userID)
+        .single();
+
+      if (error || !userData) {
+        alert("Could not retrieve user data");
+        return;
+      }
+
+      // Suppose userData.course is a CSV of courses or an empty string
+      let existingCourses = [];
+      if (userData.course) {
+        existingCourses = userData.course.split(',');
+      }
+
+      // If not in list, push
+      if (!existingCourses.includes(currentCourseLabel)) {
+        existingCourses.push(currentCourseLabel);
+      }
+
+      const updatedCourses = existingCourses.join(',');
+      // Update user row
+      const { error: updateErr } = await supabase
+        .from('users')
+        .update({ course: updatedCourses })
+        .eq('id', userID);
+
+      if (updateErr) {
+        alert("Error adding course: " + updateErr.message);
+      } else {
+        alert("Course added!");
+        // Update localStorage
+        localStorage.setItem('userCourses', updatedCourses);
+        updateUserInfoPanel();
+      }
+    });
+
+    // Wire up removeCourseBtn
+    removeCourseBtn.addEventListener("click", async () => {
+      if (!currentCourseLabel) return;
+      const userID = localStorage.getItem('userID');
+      if (!userID) return alert("No logged in user.");
+
+      // Retrieve user row
+      const { data: userData, error } = await supabase
+        .from('users')
+        .select('*')
+        .eq('id', userID)
+        .single();
+
+      if (error || !userData) {
+        alert("Could not retrieve user data");
+        return;
+      }
+
+      let existingCourses = [];
+      if (userData.course) {
+        existingCourses = userData.course.split(',');
+      }
+      // filter out this course
+      existingCourses = existingCourses.filter(c => c !== currentCourseLabel);
+
+      const newCourseString = existingCourses.join(',');
+      // Update user row
+      const { error: updateErr } = await supabase
+        .from('users')
+        .update({ course: newCourseString })
+        .eq('id', userID);
+
+      if (updateErr) {
+        alert("Error removing course: " + updateErr.message);
+      } else {
+        alert("Course removed!");
+        localStorage.setItem('userCourses', newCourseString);
+        updateUserInfoPanel();
+      }
+    });
+
+    // Show/hide user info circle:
+    const userCircle = document.getElementById("userCircle");
+    const userInfoPanel = document.getElementById("userInfoPanel");
+    userCircle.addEventListener("click", () => {
+      if (userInfoPanel.style.display === "none") {
+        userInfoPanel.style.display = "block";
+        updateUserInfoPanel();
+      } else {
+        userInfoPanel.style.display = "none";
+      }
+    });
+
+    function updateUserInfoPanel() {
+      const userNameDisplay = document.getElementById("userNameDisplay");
+      const userCoursesList = document.getElementById("userCoursesList");
+
+      const name = localStorage.getItem("userName") || "No Name";
+      const coursesCSV = localStorage.getItem("userCourses") || "";
+      const coursesArr = coursesCSV ? coursesCSV.split(',') : [];
+
+      userNameDisplay.textContent = name;
+      userCoursesList.innerHTML = "";
+      coursesArr.forEach(course => {
+        if (!course) return;
+        const li = document.createElement('li');
+        li.textContent = course;
+        userCoursesList.appendChild(li);
+      });
+    }
+
+    window.handleLogout = function() {
+      localStorage.removeItem('userID');
+      localStorage.removeItem('userName');
+      localStorage.removeItem('userCourses');
+      window.location.href = "index.html";
+    }
+
+    // Once the page loads, check if user is logged in
+    window.addEventListener("DOMContentLoaded", () => {
+      const userID = localStorage.getItem('userID');
+      if (!userID) {
+        window.location.href = "index.html"; // not logged in, back to login
+      } else {
+        // set circle name:
+        const storedName = localStorage.getItem("userName") || "U";
+        userCircle.textContent = storedName.charAt(0).toUpperCase() || "U";
+      }
+    });
+  </script>
+  <!-- Original script (non-module) for filter logic -->
+  <script src="script.js" defer></script>
+</body>
+</html>
