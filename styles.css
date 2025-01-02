@@ -338,20 +338,26 @@
     overflow-y: auto; /* Vertical scrolling if content is taller than viewport */
     background-color: rgba(0, 0, 0, 0.5);
   }
-  .modal-content {
-    background-color: #fefefe;
-    margin: 50px auto;
-    padding: 20px;
-    border: 1px solid #888;
-    width: 80%;
-    max-width: 600px;
-    border-radius: 10px;
-    position: relative;
-    text-align: center;
-    display: flex; /* Center content */
-    flex-direction: column;
-    align-items: center;
-  }
+/* MODAL WINDOW: auto-size to content, a bit bigger to cover all content */
+.modal-content {
+  display: inline-block !important;  /* shrink/expand to fit content width */
+  width: auto !important;           /* no fixed width */
+  max-width: 90% !important;        /* limit if content is very wide */
+  margin: 60px auto !important;     /* center horizontally, leave space at top */
+  padding: 20px !important;         /* extra padding around content */
+  max-height: 90vh !important;      /* allow tall content; keep inside viewport */
+  overflow-y: auto !important;      /* scroll if content is taller than 90vh */
+}
+
+/* USER PROFILE CIRCLE: bigger for all screen sizes */
+#userCircle {
+  width: 60px !important;    /* enlarge the circle */
+  height: 60px !important;   /* enlarge the circle */
+  border-radius: 50% !important;
+  font-size: 20px !important;        /* bigger text, if showing an initial */
+  line-height: 60px !important;      /* center text vertically */
+  text-align: center !important;
+}
   .modal-image-container {
     width: 100%;
     max-width: 400px;
@@ -520,15 +526,7 @@
   
     /* Shorter, fully centered modal */
   
-    .modal-content {
-      display: inline-block !important;  /* shrink/expand to fit content width */
-      width: auto !important;           /* no fixed width */
-      max-width: 90% !important;        /* limit if content is very wide */
-      margin: 60px auto !important;     /* center horizontally, leave space at top */
-      padding: 20px !important;         /* extra padding around content */
-      max-height: 90vh !important;      /* allow tall content; keep inside viewport */
-      overflow-y: auto !important;      /* scroll if content is taller than 90vh */
-    }
+
     .modal-image-container {
       max-width: 200px;
       max-height: 200px;
