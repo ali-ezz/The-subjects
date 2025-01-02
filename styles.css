@@ -527,7 +527,7 @@
       max-height: 400px;
     }
     .content-area {
-      gap: 15px;
+      gap: 10px;
       justify-content: center;
     }
     .right-side {
