@@ -338,14 +338,28 @@
     overflow-y: auto; /* Vertical scrolling if content is taller than viewport */
     background-color: rgba(0, 0, 0, 0.5);
   }
-/* MODAL WINDOW: auto-size to content, a bit bigger to cover all content */
+  .modal-content {
+    background-color: #fefefe;
+    margin: 50px auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%;
+    max-width: 600px;
+    border-radius: 10px;
+    position: relative;
+    text-align: center;
+    display: flex; /* Center content */
+    flex-direction: column;
+    align-items: center;
+  }
+  /* MODAL WINDOW: auto-size to content, a bit bigger to cover all content */
 .modal-content {
   display: inline-block !important;  /* shrink/expand to fit content width */
   width: auto !important;           /* no fixed width */
-  max-width: 90% !important;        /* limit if content is very wide */
+  max-width: 40% !important;        /* limit if content is very wide */
   margin: 60px auto !important;     /* center horizontally, leave space at top */
   padding: 20px !important;         /* extra padding around content */
-  max-height: 90vh !important;      /* allow tall content; keep inside viewport */
+  max-height: 40vh !important;      /* allow tall content; keep inside viewport */
   overflow-y: auto !important;      /* scroll if content is taller than 90vh */
 }
 
@@ -357,6 +371,20 @@
   font-size: 20px !important;        /* bigger text, if showing an initial */
   line-height: 60px !important;      /* center text vertically */
   text-align: center !important;
+}
+/* Make the #userInfoPanel bigger and easier to control */
+#userInfoPanel {
+  position: absolute !important;
+  top: 80px !important;        /* adjust vertical position if needed */
+  right: 20px !important;      /* adjust horizontal position if needed */
+  width: 250px !important;     /* increase width */
+  min-height: 150px !important;/* initial height */
+  padding: 20px !important;    /* extra padding */
+  border: 2px solid #ccc !important;
+  border-radius: 15px !important;
+  background-color: #fff !important;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2) !important; /* subtle shadow */
+  z-index: 9999 !important;    /* ensure it’s on top of everything */
 }
   .modal-image-container {
     width: 100%;
