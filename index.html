@@ -2,138 +2,116 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>مناهج التعلم</title>
-  <link rel="stylesheet" href="styles.css">
+  <title>Login Page</title>
+  <style>
+    /* Make body fill the viewport and center content */
+    html, body {
+      margin: 0;
+      padding: 0;
+      height: 100%;
+    }
+    body {
+      font-family: Arial, sans-serif;
+      background: #f0f0f0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    /* Login container bigger and centered */
+    .login-container {
+      background: white; 
+      width: 500px;       /* Increased width for desktop */
+      height: 550px;      /* Taller container */
+      padding: 30px; 
+      border-radius: 10px;
+      box-shadow: 0 0 8px #ccc;
+      max-width: 90%;     /* Prevent overflow on narrower screens */
+      display: flex;
+      flex-direction: column;
+      justify-content: center; /* Center content vertically */
+    }
+
+    h2 {
+      text-align: center;
+      margin-bottom: 20px;
+      font-size: 24px; /* Larger heading */
+    }
+
+    input[type="text"],
+    input[type="password"] {
+      width: 100%; 
+      padding: 12px; 
+      margin-bottom: 15px; 
+      border: 1px solid #ccc; 
+      border-radius: 5px;
+      font-size: 16px; /* Larger input font */
+    }
+
+    button {
+      width: 100%; 
+      padding: 12px; 
+      background: #007bff; 
+      color: #fff; 
+      border: none; 
+      border-radius: 5px; 
+      cursor: pointer; 
+      font-size: 18px; /* Larger button font */
+    }
+    button:hover {
+      background: #0056b3;
+    }
+
+    .toggle-btn {
+      background: #28a745 !important;
+      margin-top: 10px;
+    }
+
+    p.error {
+      color: red;
+      text-align: center;
+      margin: 10px;
+      font-size: 16px;
+    }
+    p.success {
+      color: green;
+      text-align: center;
+      margin: 10px;
+      font-size: 16px;
+    }
+
+    /*
+      Media query for smaller screens (phones ≤ 600px).
+      Make the login fill more vertical space and coordinate better.
+    */
+    @media only screen and (max-width: 600px) {
+      .login-container {
+        width: 90%;
+        height: 80vh;    /* Fill more space on small devices */
+        max-height: 600px; 
+      }
+      h2 {
+        font-size: 20px;
+      }
+      body {
+        font-size: 14px;
+      }
+      button {
+        font-size: 16px;
+      }
+    }
+  </style>
 </head>
 <body>
-  <h1 style="padding-top: 20px; font-size: 30px; font-family: system-ui, sans-serif;">مناهج التعلم</h1>
-
-  <!-- Small circle for user info -->
-  <div id="userCircle" style="
-    position: absolute; top: 20px; right: 20px; 
-    width: 40px; height: 40px; 
-    border-radius: 50%; 
-    background-color: orange; 
-    cursor: pointer; 
-    display: flex; 
-    align-items: center; 
-    justify-content: center; 
-    color: white;
-    ">
-    U
+  <div class="login-container">
+    <h2 id="form-title">Login</h2>
+    <input type="text" id="email" placeholder="Email" />
+    <input type="password" id="password" placeholder="Password" />
+    <button id="submitBtn" onclick="handleSubmit()">Login</button>
+    <button class="toggle-btn" onclick="toggleForm()">No account? Click to Sign Up</button>
+    <p id="message"></p>
   </div>
 
-  <!-- Hidden user info panel -->
-  <div id="userInfoPanel" style="
-    display: none; position: absolute; top: 70px; right: 20px; 
-    background: #fff; border: 1px solid #ccc; padding: 10px; 
-    border-radius: 10px; width: 200px;
-  ">
-    <div id="userNameDisplay" style="font-weight: bold; margin-bottom: 5px;"></div>
-    <div><strong>Your Courses:</strong></div>
-    <ul id="userCoursesList" style="padding-left: 20px;"></ul>
-    <button onclick="handleLogout()" style="margin-top: 10px; background:#ff5757; border:none; color: #fff; padding:5px 10px; border-radius:5px; cursor:pointer;">
-      Logout
-    </button>
-  </div>
-
-  <!-- Search Bar Container -->
-  <div class="search-container">
-    <input type="text" id="search-bar" class="search-bar" placeholder="...ما المادة التي تبحث عنها">
-  </div>
-
-  <!-- Box 1: Filter Area 1 -->
-  <div class="filter-container box-1-container">
-    <div class="filter-area filter-area-1">
-      <button class="filter-button" onclick="selectFilter('Filter 1')">مواد عامة</button>
-      <button class="filter-button" onclick="selectFilter('Filter 2')">علوم البيانات</button>
-      <button class="filter-button" onclick="selectFilter('Filter 3')">الوسائط</button>
-      <button class="filter-button" onclick="selectFilter('Filter 4')">الإنسان الآلي</button>
-    </div>
-  </div>
-
-  <!-- Main Content Container -->
-  <div class="container">
-    <!-- Content Area -->
-    <div class="content-container">
-      <div class="content-area" id="content-area">
-        <!-- Content items will be dynamically added here -->
-      </div>
-    </div>
-
-    <!-- Right Side: Selected Filters Box and Filters -->
-    <div class="right-side">
-      <!-- Selected Filters Box -->
-      <div class="filter-box selected-filter-box" id="selected-filter-box">
-        <div class="filter-box-title">المرشحات المختارة</div>
-        <div class="selected-filter-content" id="selected-filter-content">
-          <!-- Selected filters will be dynamically added here -->
-        </div>
-      </div>
-
-      <!-- Box 2 Filter Box -->
-      <div class="filter-box">
-        <div class="filter-box-title">المرشحات الثانوية</div>
-        <div class="filter-area filter-area-2">
-          <!-- Box 2 filters will be dynamically generated -->
-        </div>
-      </div>
-
-      <!-- Circle Color Filters Box -->
-      <div class="filter-box">
-        <div class="filter-box-title">حالة المادة</div>
-        <div class="filter-area circle-filters">
-          <button class="filter-button" onclick="selectCircleFilter('green')">
-            <div class="circle-icon green"></div>
-            يدرس
-          </button>
-          <button class="filter-button" onclick="selectCircleFilter('yellow')">
-            <div class="circle-icon yellow"></div>
-            قادم
-          </button>
-          <button class="filter-button" onclick="selectCircleFilter('red')">
-            <div class="circle-icon red"></div>
-            ملغى
-          </button>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- Modal -->
-  <div id="imageModal" class="modal">
-    <div class="modal-content">
-      <button class="close-modal" onclick="closeModal()">×</button>
-      <!-- Updated modal image container -->
-      <div class="modal-image-container">
-        <img id="modalImage" class="modal-image" alt="" />
-      </div>
-      <div id="modalCustomContent"></div>
-      <!-- Buttons to add/remove course -->
-      <button id="addCourseBtn" style="
-        background: #28a745; 
-        color: white; 
-        border-radius: 5px; 
-        border: none;
-        padding: 5px 10px;
-        margin-top: 10px;
-        cursor: pointer;">
-        Add this course
-      </button>
-      <button id="removeCourseBtn" style="
-        background: #ff5757; 
-        color: white; 
-        border-radius: 5px; 
-        border: none;
-        padding: 5px 10px;
-        margin-top: 5px;
-        cursor: pointer;">
-        Remove this course
-      </button>
-    </div>
-  </div>
-
-  <!-- Script references -->
-  <script type="module" src="script.js"></script>
+  <script type="module" src="login.js"></script>
 </body>
 </html>
