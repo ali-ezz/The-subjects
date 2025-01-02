@@ -1,61 +1,104 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
+  <meta charset="UTF-8">
   <title>Login Page</title>
   <style>
-    /* Quick inline style for demo; move to external CSS if desired */
-    body {
-      font-family: Arial, sans-serif; 
-      background: #f0f0f0; 
-      margin: 0; 
+    /* Make body fill the viewport and center content */
+    html, body {
+      margin: 0;
       padding: 0;
+      height: 100%;
     }
+    body {
+      font-family: Arial, sans-serif;
+      background: #f0f0f0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    /* Login container bigger and centered */
     .login-container {
       background: white; 
-      width: 300px; 
-      margin: 100px auto; 
-      padding: 20px; 
+      width: 500px;       /* Increased width for desktop */
+      height: 550px;      /* Taller container */
+      padding: 30px; 
       border-radius: 10px;
       box-shadow: 0 0 8px #ccc;
+      max-width: 90%;     /* Prevent overflow on narrower screens */
+      display: flex;
+      flex-direction: column;
+      justify-content: center; /* Center content vertically */
     }
+
     h2 {
       text-align: center;
-      margin-bottom: 15px;
+      margin-bottom: 20px;
+      font-size: 24px; /* Larger heading */
     }
-    input[type="text"], input[type="password"] {
+
+    input[type="text"],
+    input[type="password"] {
       width: 100%; 
-      padding: 8px; 
-      margin-bottom: 10px; 
+      padding: 12px; 
+      margin-bottom: 15px; 
       border: 1px solid #ccc; 
       border-radius: 5px;
+      font-size: 16px; /* Larger input font */
     }
+
     button {
       width: 100%; 
-      padding: 10px; 
+      padding: 12px; 
       background: #007bff; 
       color: #fff; 
       border: none; 
       border-radius: 5px; 
       cursor: pointer; 
-      font-size: 16px;
+      font-size: 18px; /* Larger button font */
     }
     button:hover {
       background: #0056b3;
     }
+
     .toggle-btn {
       background: #28a745 !important;
       margin-top: 10px;
     }
+
     p.error {
       color: red;
       text-align: center;
       margin: 10px;
+      font-size: 16px;
     }
     p.success {
       color: green;
       text-align: center;
       margin: 10px;
+      font-size: 16px;
+    }
+
+    /*
+      Media query for smaller screens (phones ≤ 600px).
+      Make the login fill more vertical space and coordinate better.
+    */
+    @media only screen and (max-width: 600px) {
+      .login-container {
+        width: 90%;
+        height: 80vh;    /* Fill more space on small devices */
+        max-height: 600px; 
+      }
+      h2 {
+        font-size: 20px;
+      }
+      body {
+        font-size: 14px;
+      }
+      button {
+        font-size: 16px;
+      }
     }
   </style>
 </head>
