@@ -519,12 +519,15 @@
     }
   
     /* Shorter, fully centered modal */
+  
     .modal-content {
-      width: 90%;
-      margin: 30px auto;
-      padding: 15px;
-      max-width: 350px;
-      max-height: 300px;
+      display: inline-block !important;  /* shrink/expand to fit content width */
+      width: auto !important;           /* no fixed width */
+      max-width: 90% !important;        /* limit if content is very wide */
+      margin: 60px auto !important;     /* center horizontally, leave space at top */
+      padding: 20px !important;         /* extra padding around content */
+      max-height: 90vh !important;      /* allow tall content; keep inside viewport */
+      overflow-y: auto !important;      /* scroll if content is taller than 90vh */
     }
     .modal-image-container {
       max-width: 200px;
